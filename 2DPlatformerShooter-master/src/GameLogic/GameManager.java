@@ -1,12 +1,18 @@
 package GameLogic;
 
+import Persistence.JsonReader;
+import Persistence.JsonWriter;
+import Persistence.Savable;
 import UI.GameWindow;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.List;
 
-public class GameManager {
+public class GameManager implements Savable {
 
     private final GameWindow gameWindow;
     public ArrayList<Sprite> sprites = new ArrayList<>();
@@ -166,6 +172,42 @@ public class GameManager {
             player2.keyUp = false;
             player2.keyLeft = false;
             player2.keyRight = false;
+        }
+    }
+
+    @Override
+    public JSONObject toJson() {
+        JSONObject players = new JSONObject();
+        players.put("players status", playersStatus());
+        return players;
+    }
+
+    private JSONArray playersStatus() {
+        JSONArray playerArray = new JSONArray();
+        playerArray.put(player1.toJson());
+        if(player2 != null) {
+            playerArray.put(player2.toJson());
+        }
+        return playerArray;
+    }
+
+    public void loadPlayers(List<Player> players) {
+        player1.xLoc = players.get(0).xLoc;
+        player1.yLoc = players.get(0).yLoc;
+        player1.xVel = players.get(0).xVel;
+        player1.yVel = players.get(0).yVel;
+        player1.setHP(players.get(0).getHP());
+        player1.setAmmo(players.get(0).getWeapon().getAmmo());
+        gameWindow.repaint();
+
+        if(players.size() != 1) {
+            player2.xLoc = players.get(1).xLoc;
+            player2.yLoc = players.get(1).yLoc;
+            player2.xVel = players.get(1).xVel;
+            player2.yVel = players.get(1).yVel;
+            player2.setHP(players.get(1).getHP());
+            player2.setAmmo(players.get(1).getWeapon().getAmmo());
+            gameWindow.repaint();
         }
     }
 }

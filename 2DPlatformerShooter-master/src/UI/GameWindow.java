@@ -1,14 +1,18 @@
 package UI;
 
 import GameLogic.GameLoop;
+import Persistence.JsonReader;
+import Persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 
 public class GameWindow extends JFrame {
     private static final int WIDTH = 640;
     private static final int HEIGHT = WIDTH / 12 * 9;
     private static final String TITLE = "Platformer Game";
+
     private mainMenuPanel mainMenuPanel;
     private GameLoop gameLoop;
     private EscapeMenu escape;
@@ -227,5 +231,12 @@ public class GameWindow extends JFrame {
         this.setVisible(true);
     }
 
+    public void load() {
+        gameLoop.loadPlayers();
+    }
+
+    public void save() {
+        gameLoop.savePlayers();
+    }
 }
 

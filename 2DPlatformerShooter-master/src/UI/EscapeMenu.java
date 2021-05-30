@@ -10,8 +10,10 @@ public class EscapeMenu extends JPanel{
     private JButton resume;
     private JButton goBack;
     private JButton tutorial;
+    private JButton save;
+    private JButton load;
     private static final int XPOSITION = 210;
-    private static final int YPOSITION = 150;
+    private static final int YPOSITION = 100;
     private static final int WIDTH = 200;
     private static final int HEIGHT = 35;
     private final GameWindow gw;
@@ -32,6 +34,8 @@ public class EscapeMenu extends JPanel{
         resume = new JButton("Resume");
         goBack = new JButton("Return To Menu");
         tutorial = new JButton("Tutorial");
+        save = new JButton("Save");
+        load = new JButton("Load");
     }
 
     //MODIFIES: this
@@ -45,6 +49,10 @@ public class EscapeMenu extends JPanel{
         add(goBack);
         tutorial.setBounds(XPOSITION,YPOSITION + 100, WIDTH,HEIGHT);
         add(tutorial);
+        save.setBounds(XPOSITION,YPOSITION + 150, WIDTH,HEIGHT);
+        add(save);
+        load.setBounds(XPOSITION,YPOSITION + 200, WIDTH,HEIGHT);
+        add(load);
     }
 
     //MODIFIES: this
@@ -54,6 +62,8 @@ public class EscapeMenu extends JPanel{
         resume.addActionListener(listener);
         goBack.addActionListener(listener);
         tutorial.addActionListener(listener);
+        save.addActionListener(listener);
+        load.addActionListener(listener);
     }
 
     //represents an ActionListener class
@@ -71,6 +81,10 @@ public class EscapeMenu extends JPanel{
                 gw.mainMenu();
             } else if (e.getSource() == tutorial) {
                 openFrame();
+            } else if (e.getSource() == save) {
+                gw.save();
+            } else if (e.getSource() == load) {
+                gw.load();
             }
         }
     }

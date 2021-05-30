@@ -1,0 +1,18 @@
+{"players status": [
+    {
+        "xVel": 0,
+        "ammo": 77,
+        "hp": 100,
+        "yVel": 0,
+        "xLoc": 49,
+        "yLoc": 332
+    },
+    {
+        "xVel": 0,
+        "ammo": 100,
+        "hp": 15,
+        "yVel": 0,
+        "xLoc": 371,
+        "yLoc": 332
+    }
+]}

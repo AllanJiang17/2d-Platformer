@@ -10,6 +10,7 @@ public class mainMenuPanel extends JPanel {
     private JButton startSP;
     private JButton startMP;
     private JButton tutorial;
+    private JButton load;
     private static final int XPOSITION = 210;
     private static final int YPOSITION = 150;
     private static final int WIDTH = 200;

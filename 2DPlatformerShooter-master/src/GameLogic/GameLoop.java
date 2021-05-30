@@ -1,5 +1,7 @@
 package GameLogic;
 
+import Persistence.JsonReader;
+import Persistence.JsonWriter;
 import UI.GameWindow;
 
 import javax.imageio.ImageIO;
@@ -7,9 +9,15 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GameLoop extends Canvas implements Runnable {
+    private static final String JSONSTORE = "./data/players.json";
+    private JsonReader jsonReader;
+    private JsonWriter jsonWriter;
 
     private static final int WIDTH = 640;
     private static final int HEIGHT = WIDTH / 12 * 9;
@@ -26,6 +34,8 @@ public class GameLoop extends Canvas implements Runnable {
     //in constructor is where we add elements to the game manager
 
     public GameLoop(boolean s, GameWindow gameWindow) {
+        jsonReader = new JsonReader(JSONSTORE);
+        jsonWriter = new JsonWriter(JSONSTORE);
 
         gameManager = new GameManager(gameWindow);
         if (s) {
@@ -199,5 +209,24 @@ public class GameLoop extends Canvas implements Runnable {
 
     public void resetPlayer() {
        gameManager.resetPlayers();
+    }
+
+    public void loadPlayers() {
+        try {
+            List<Player> players = jsonReader.read();
+            gameManager.loadPlayers(players);
+        } catch (IOException e) {
+            System.out.println("Error in loading file from " + JSONSTORE);
+        }
+    }
+
+    public void savePlayers() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(gameManager);
+            jsonWriter.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Error in saving file to " + JSONSTORE);
+        }
     }
 }

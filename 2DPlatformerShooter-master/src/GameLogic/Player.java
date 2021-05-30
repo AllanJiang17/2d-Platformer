@@ -1,11 +1,15 @@
 package GameLogic;
 
+import Persistence.Savable;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
-public class Player extends Sprite {
+public class Player extends Sprite implements Savable {
 
     public boolean keyLeft = false;
     public boolean keyRight = false;
@@ -269,8 +273,27 @@ public class Player extends Sprite {
         return HP;
     }
 
+    public void setHP(int hp) {
+        HP = hp;
+    }
+
     public void refreshedWeapon() {
         addedWeapon = false;
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject players = new JSONObject();
+        players.put("xLoc",this.getxLoc());
+        players.put("yLoc",this.getyLoc());
+        players.put("xVel",this.getxVel());
+        players.put("yVel",this.getyVel());
+        players.put("hp", this.getHP());
+        players.put("ammo", this.weapon.getAmmo());
+        return players;
+    }
+
+    public void setAmmo(int ammo) {
+        weapon.setAmmo(ammo);
+    }
 }
